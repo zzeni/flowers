@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+<div>
+  <%= image_tag @flower.picture.thumb('400x200#').url if @flower.picture_stored? %>
+</div>
+
+<p>
+  <strong>Title:</strong>
+  <%= @flower.title %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @flower.description %>
+</p>
+
+<p>
+  <strong>Votes:</strong>
+  <%= @flower.votes %>
+</p>
+
+<%= link_to 'Edit', edit_flower_path(@flower) %> |
+<%= link_to 'Back', flowers_path %>

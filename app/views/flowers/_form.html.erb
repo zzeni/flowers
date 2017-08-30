@@ -1,0 +1,40 @@
+<%= form_with(model: flower, local: true) do |form| %>
+  <% if flower.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(flower.errors.count, "error") %> prohibited this flower from being saved:</h2>
+
+      <ul>
+      <% flower.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <div class="image-preview">
+      <%= image_tag @flower.picture.thumb('400x200#').url if @flower.picture_stored? %>
+    </div>
+    <%= form.label :picture %>
+    <%= form.file_field :picture, id: :flower_picture %>
+  </div>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, id: :flower_title %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description, id: :flower_description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :votes %>
+    <%= form.number_field :votes, id: :flower_votes %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
