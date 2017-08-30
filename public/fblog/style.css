@@ -1,0 +1,41 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: Lato;
+  display: flex;
+  flex-direction: column;
+  color: #303030;
+}
+
+header nav, footer {
+  padding: 20px;
+}
+
+footer {
+  color: white;
+  font-weight: bold;
+  font-size: .9em;
+  text-align: center;
+  background-color: #a1a1a1;
+}
+
+main {
+  margin: 4em 0;
+  flex-grow: 1;
+}
+
+#home-screen .jumbotron img {
+  max-width: 600px;
+  margin: 30px auto;
+}
+
+.flower-screen {
+  margin-top: 30px;
+}
+
+.flower-screen .comment {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

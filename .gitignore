@@ -21,5 +21,6 @@
 /yarn-error.log
 
 /public/system/dragonfly
+/public/fblog/node_modules
 
 .byebug_history
