@@ -52,7 +52,7 @@ RSpec.describe FlowersController, type: :controller do
   describe "GET #index" do
     it "returns a success response" do
       flower = Flower.create! valid_attributes
-      get :index, params: {}, session: valid_session
+      get :index, params: {}, session: valid_session, format: :json
       expect(response).to be_success
     end
   end
@@ -60,14 +60,14 @@ RSpec.describe FlowersController, type: :controller do
   describe "GET #show" do
     it "returns a success response" do
       flower = Flower.create! valid_attributes
-      get :show, params: {id: flower.to_param}, session: valid_session
+      get :show, params: {id: flower.to_param}, session: valid_session, format: :json
       expect(response).to be_success
     end
   end
 
   describe "GET #new" do
     it "returns a success response" do
-      get :new, params: {}, session: valid_session
+      get :new, params: {}, session: valid_session, format: :json
       expect(response).to be_success
     end
   end
@@ -75,7 +75,7 @@ RSpec.describe FlowersController, type: :controller do
   describe "GET #edit" do
     it "returns a success response" do
       flower = Flower.create! valid_attributes
-      get :edit, params: {id: flower.to_param}, session: valid_session
+      get :edit, params: {id: flower.to_param}, session: valid_session, format: :json
       expect(response).to be_success
     end
   end
@@ -84,20 +84,15 @@ RSpec.describe FlowersController, type: :controller do
     context "with valid params" do
       it "creates a new Flower" do
         expect {
-          post :create, params: {flower: valid_attributes}, session: valid_session
+          post :create, params: {flower: valid_attributes}, session: valid_session, format: :json
         }.to change(Flower, :count).by(1)
-      end
-
-      it "redirects to the created flower" do
-        post :create, params: {flower: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(Flower.last)
       end
     end
 
     context "with invalid params" do
-      it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {flower: invalid_attributes}, session: valid_session
-        expect(response).to be_success
+      it "returns invalid params response" do
+        post :create, params: {flower: invalid_attributes}, session: valid_session, format: :json
+        expect(response.status).to eq(422)
       end
     end
   end
@@ -110,23 +105,17 @@ RSpec.describe FlowersController, type: :controller do
 
       it "updates the requested flower" do
         flower = Flower.create! valid_attributes
-        put :update, params: {id: flower.to_param, flower: new_attributes}, session: valid_session
+        put :update, params: {id: flower.to_param, flower: new_attributes}, session: valid_session, format: :json
         flower.reload
         skip("Add assertions for updated state")
-      end
-
-      it "redirects to the flower" do
-        flower = Flower.create! valid_attributes
-        put :update, params: {id: flower.to_param, flower: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(flower)
       end
     end
 
     context "with invalid params" do
-      it "returns a success response (i.e. to display the 'edit' template)" do
+      it "returns invalid params response" do
         flower = Flower.create! valid_attributes
-        put :update, params: {id: flower.to_param, flower: invalid_attributes}, session: valid_session
-        expect(response).to be_success
+        put :update, params: {id: flower.to_param, flower: invalid_attributes}, session: valid_session, format: :json
+        expect(response.status).to eq(422)
       end
     end
   end
@@ -135,14 +124,8 @@ RSpec.describe FlowersController, type: :controller do
     it "destroys the requested flower" do
       flower = Flower.create! valid_attributes
       expect {
-        delete :destroy, params: {id: flower.to_param}, session: valid_session
+        delete :destroy, params: {id: flower.to_param}, session: valid_session, format: :json
       }.to change(Flower, :count).by(-1)
-    end
-
-    it "redirects to the flowers list" do
-      flower = Flower.create! valid_attributes
-      delete :destroy, params: {id: flower.to_param}, session: valid_session
-      expect(response).to redirect_to(flowers_url)
     end
   end
 

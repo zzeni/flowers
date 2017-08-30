@@ -53,7 +53,7 @@ RSpec.describe CommentsController, type: :controller do
   describe "GET #index" do
     it "returns a success response" do
       comment = Comment.create! valid_attributes
-      get :index, params: {}, session: valid_session
+      get :index, params: {flower_id: flower.id, }, session: valid_session, format: :json
       expect(response).to be_success
     end
   end
@@ -61,14 +61,14 @@ RSpec.describe CommentsController, type: :controller do
   describe "GET #show" do
     it "returns a success response" do
       comment = Comment.create! valid_attributes
-      get :show, params: {id: comment.to_param}, session: valid_session
+      get :show, params: {flower_id: flower.id, id: comment.to_param}, session: valid_session, format: :json
       expect(response).to be_success
     end
   end
 
   describe "GET #new" do
     it "returns a success response" do
-      get :new, params: {}, session: valid_session
+      get :new, params: {flower_id: flower.id, }, session: valid_session, format: :json
       expect(response).to be_success
     end
   end
@@ -76,7 +76,7 @@ RSpec.describe CommentsController, type: :controller do
   describe "GET #edit" do
     it "returns a success response" do
       comment = Comment.create! valid_attributes
-      get :edit, params: {id: comment.to_param}, session: valid_session
+      get :edit, params: {flower_id: flower.id, id: comment.to_param}, session: valid_session, format: :json
       expect(response).to be_success
     end
   end
@@ -85,20 +85,16 @@ RSpec.describe CommentsController, type: :controller do
     context "with valid params" do
       it "creates a new Comment" do
         expect {
-          post :create, params: {comment: valid_attributes}, session: valid_session
+          post :create, params: {flower_id: flower.id, comment: valid_attributes}, session: valid_session, format: :json
         }.to change(Comment, :count).by(1)
-      end
-
-      it "redirects to the created comment" do
-        post :create, params: {comment: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(Comment.last)
       end
     end
 
     context "with invalid params" do
-      it "returns a success response (i.e. to display the 'new' template)" do
-        post :create, params: {comment: invalid_attributes}, session: valid_session
+      it "returns invalid params response" do
+        post :create, params: {flower_id: flower.id, comment: invalid_attributes}, session: valid_session, format: :json
         expect(response).to be_success
+        expect(response.status).to eq(422)
       end
     end
   end
@@ -111,23 +107,17 @@ RSpec.describe CommentsController, type: :controller do
 
       it "updates the requested comment" do
         comment = Comment.create! valid_attributes
-        put :update, params: {id: comment.to_param, comment: new_attributes}, session: valid_session
+        put :update, params: {flower_id: flower.id, id: comment.to_param, comment: new_attributes}, session: valid_session, format: :json
         comment.reload
         skip("Add assertions for updated state")
-      end
-
-      it "redirects to the comment" do
-        comment = Comment.create! valid_attributes
-        put :update, params: {id: comment.to_param, comment: valid_attributes}, session: valid_session
-        expect(response).to redirect_to(comment)
       end
     end
 
     context "with invalid params" do
-      it "returns a success response (i.e. to display the 'edit' template)" do
+      it "returns invalid params response" do
         comment = Comment.create! valid_attributes
-        put :update, params: {id: comment.to_param, comment: invalid_attributes}, session: valid_session
-        expect(response).to be_success
+        put :update, params: {flower_id: flower.id, id: comment.to_param, comment: invalid_attributes}, session: valid_session, format: :json
+        expect(response.status).to eq(422)
       end
     end
   end
@@ -136,14 +126,8 @@ RSpec.describe CommentsController, type: :controller do
     it "destroys the requested comment" do
       comment = Comment.create! valid_attributes
       expect {
-        delete :destroy, params: {id: comment.to_param}, session: valid_session
+        delete :destroy, params: {flower_id: flower.id, id: comment.to_param}, session: valid_session, format: :json
       }.to change(Comment, :count).by(-1)
-    end
-
-    it "redirects to the comments list" do
-      comment = Comment.create! valid_attributes
-      delete :destroy, params: {id: comment.to_param}, session: valid_session
-      expect(response).to redirect_to(comments_url)
     end
   end
 
