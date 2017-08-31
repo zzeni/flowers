@@ -1,5 +1,4 @@
-<a class="btn btn-outline-secondary btn-lg" ui-sref="flowers">Back</a>
-<button class="btn btn-outline-success btn-lg" type="button" ng-click="openCommentPopupNotImplemented">Comment</button>
+<a class="" ui-sref="flowers">Back to index</a>
 
 <article class="flower-screen">
   <img ng-src="{{ $ctrl.flower.picture ? 'http://localhost:3000' + $ctrl.flower.picture.large : 'img/missing.png' }}" class="figure-img img-fluid rounded" alt="{{ $ctrl.flower.title }}">
@@ -11,16 +10,55 @@
   </p>
   <p class="text-muted">Added on {{ $ctrl.flower.created_at | date }}</p>
 
-  <h3>Comments:</h3>
+  <a class="btn btn-outline-secondary btn-lg" ui-sref="flowers">Back</a>
+  <button class="btn btn-outline-success btn-lg" type="button" data-toggle="modal" data-target="#addCommentModal">Comment</button>
 
-  <div ng-repeat="comment in $ctrl.comments" class="comment card">
-    <div class="card-body">
-      <h4 class="card-title">
-        <strong>{{ comment.author }}</strong>
-        <span ng-show="comment.vote" class="small float-right">Vote: {{ comment.vote }}</span>
-      </h4>
-      <h6 class="card-subtitle mb-2 text-muted">on {{ comment.created_at | date }}</h6>
-      <p class="card-text">{{ comment.body }}</p>
+  <section class="comments">
+    <h3>Comments:</h3>
+
+    <div ng-repeat="comment in $ctrl.comments" class="comment card">
+      <div class="card-body">
+        <h4 class="card-title">
+          <strong>{{ comment.author }}</strong>
+          <span ng-show="comment.vote || comment.vote === 0" class="small float-right">Vote: {{ comment.vote }}</span>
+        </h4>
+        <h6 class="card-subtitle mb-2 text-muted">on {{ comment.created_at | date }}</h6>
+        <p class="card-text">{{ comment.body }}</p>
+      </div>
+
+    </div>
+  </section>
+</article>
+
+<div class="modal fade" id="addCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New comment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <input class="form-control input-lg" placeholder="Your Name" ng-model="comment.author">
+          </div>
+          <div class="form-group">
+            <textarea class="form-control input-lg" placeholder="Your Opinion" ng-model="comment.body"></textarea>
+          </div>
+          <div class="form-group">
+            <label>Your Vote</label>
+            <label ng-repeat="value in [0, 1, 2, 3, 4, 5]">
+              <input type="radio" ng-model="comment.vote" name="vote" value="{{value}}"> {{ value }}
+            </label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" ng-click="$ctrl.addComment(comment, '#addCommentModal')">Save</button>
+      </div>
     </div>
   </div>
-</article>
+</div>

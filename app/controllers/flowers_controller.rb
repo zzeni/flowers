@@ -1,27 +1,15 @@
 class FlowersController < ApplicationController
   before_action :set_flower, only: [:show, :edit, :update, :destroy]
 
-  # GET /flowers
   # GET /flowers.json
   def index
     @flowers = Flower.all
   end
 
-  # GET /flowers/1
   # GET /flowers/1.json
   def show
   end
 
-  # GET /flowers/new
-  def new
-    @flower = Flower.new
-  end
-
-  # GET /flowers/1/edit
-  def edit
-  end
-
-  # POST /flowers
   # POST /flowers.json
   def create
     @flower = Flower.new(flower_params)
@@ -37,7 +25,6 @@ class FlowersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /flowers/1
   # PATCH/PUT /flowers/1.json
   def update
     respond_to do |format|
@@ -51,7 +38,6 @@ class FlowersController < ApplicationController
     end
   end
 
-  # DELETE /flowers/1
   # DELETE /flowers/1.json
   def destroy
     @flower.destroy

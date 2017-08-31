@@ -31,8 +31,7 @@ RSpec.describe FlowersController, type: :controller do
   let(:valid_attributes) {
     {
       title: 'Flower',
-      description: 'Some desc',
-      votes: 0
+      description: 'Some desc'
     }
   }
 
@@ -40,7 +39,7 @@ RSpec.describe FlowersController, type: :controller do
     {
       title: nil,
       description: '1'*1001,
-      votes: 'a'
+      votes: 5
     }
   }
 
@@ -65,21 +64,6 @@ RSpec.describe FlowersController, type: :controller do
     end
   end
 
-  describe "GET #new" do
-    it "returns a success response" do
-      get :new, params: {}, session: valid_session, format: :json
-      expect(response).to be_success
-    end
-  end
-
-  describe "GET #edit" do
-    it "returns a success response" do
-      flower = Flower.create! valid_attributes
-      get :edit, params: {id: flower.to_param}, session: valid_session, format: :json
-      expect(response).to be_success
-    end
-  end
-
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Flower" do
@@ -100,14 +84,15 @@ RSpec.describe FlowersController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { title: "New title", description: "New desc" }
       }
 
       it "updates the requested flower" do
         flower = Flower.create! valid_attributes
         put :update, params: {id: flower.to_param, flower: new_attributes}, session: valid_session, format: :json
         flower.reload
-        skip("Add assertions for updated state")
+        expect(flower.title).to eq ("New title")
+        expect(flower.description).to eq ("New desc")
       end
     end
 

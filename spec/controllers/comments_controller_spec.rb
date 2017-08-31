@@ -66,21 +66,6 @@ RSpec.describe CommentsController, type: :controller do
     end
   end
 
-  describe "GET #new" do
-    it "returns a success response" do
-      get :new, params: {flower_id: flower.id, }, session: valid_session, format: :json
-      expect(response).to be_success
-    end
-  end
-
-  describe "GET #edit" do
-    it "returns a success response" do
-      comment = Comment.create! valid_attributes
-      get :edit, params: {flower_id: flower.id, id: comment.to_param}, session: valid_session, format: :json
-      expect(response).to be_success
-    end
-  end
-
   describe "POST #create" do
     context "with valid params" do
       it "creates a new Comment" do
@@ -93,7 +78,6 @@ RSpec.describe CommentsController, type: :controller do
     context "with invalid params" do
       it "returns invalid params response" do
         post :create, params: {flower_id: flower.id, comment: invalid_attributes}, session: valid_session, format: :json
-        expect(response).to be_success
         expect(response.status).to eq(422)
       end
     end
@@ -102,14 +86,16 @@ RSpec.describe CommentsController, type: :controller do
   describe "PUT #update" do
     context "with valid params" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        {
+          vote: 2
+        }
       }
 
       it "updates the requested comment" do
         comment = Comment.create! valid_attributes
         put :update, params: {flower_id: flower.id, id: comment.to_param, comment: new_attributes}, session: valid_session, format: :json
         comment.reload
-        skip("Add assertions for updated state")
+        expect(comment.vote).to eq 2
       end
     end
 

@@ -3,6 +3,7 @@ json.id           flower.id
 json.title        flower.title
 json.description  flower.description
 json.votes        flower.votes
+json.rating       flower.rating
 
 json.picture do
   json.small    flower.picture.thumb('100x100#').url
