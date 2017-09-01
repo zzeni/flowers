@@ -22,7 +22,9 @@ _**Note:** This code is ment to be only an example and is not supposed to be use
 
 The code of the back-end app was developed and tested with **Ruby 2.4** and **Rails 5.1.3**
 
-You will also need **rubygems** installed. 
+It also uses the **imagemagick** library (version **7.0.6**), so make sure to download and install it from [here](https://www.imagemagick.org/script/download.php)
+
+You will also need **rubygems** version **2.6** or higher. 
 
 _Recommended installation tool: https://github.com/postmodern/ruby-install_
 
@@ -52,7 +54,7 @@ Then you must serve the app with your web server, until you are able to access t
 Before you can start your back-end app, first your need to install the _gem dependencies_ and set-up the sqlite database:
 
 ```
-# install the package control manager
+# install the package control manager (may require super user privileges)-
 gem install bundler
 # install project dependencies
 cd flowers
@@ -79,6 +81,8 @@ And that's it! Now you are ready to start your back-end app :)
 
 `rails s`
 
+_IMPORTANT: The front-end app is configured to find the Rails API on http://localhost:3000 so make sure to use the same host and port when starting the rails server!_
+
 #### Starting the AngularJS Front-end app
 
 See **Configuration**
@@ -88,6 +92,15 @@ See **Configuration**
 In order to run the unit test, execute:
 
 `spring rspec`
+
+## Notes
+
+I order to add the image files to the flowers model, the Rails app uses the *[Dragonfly](http://markevans.github.io/dragonfly/)* gem.  
+In case it causes you problems, you can always trade it for the *[Paperclip](https://github.com/thoughtbot/paperclip)* gem which is known to have less issues.
+
+## Demo site
+
+http://zenlabs.pro/fblog/
 
 ### Author
 
